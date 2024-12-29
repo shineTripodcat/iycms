@@ -37,11 +37,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-    
-      - name: Convert to lowercase
-        id: convert_lowercase
-        run: echo "LOWER_REF_NAME=$(echo '${{ github.ref_name }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
-    
+      
+      - name: Generate Tags
+        id: generate_tags
+        run: |
+          REF_NAME_LOWER=$(echo '${{ github.ref_name }}' | tr '[:upper:]' '[:lower:]')
+          echo "TAGS=shine1223/iycms:${{ github.ref_name }},shine1223/iycms:latest,ghcr.io/shineTripodcat/iycms:${REF_NAME_LOWER},ghcr.io/shineTripodcat/iycms:latest" >> "$GITHUB_OUTPUT"
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v4
@@ -50,8 +52,4 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: |
-            shine1223/iycms:${{ github.ref_name }}
-            shine1223/iycms:latest
-            ghcr.io/shineTripodcat/iycms:${{ env.LOWER_REF_NAME }}
-            ghcr.io/shineTripodcat/iycms:latest
+          tags: ${{ steps.generate_tags.outputs.TAGS }}
