@@ -4,7 +4,7 @@ on:
     branches:
       - release
   release:
-    types: [created]
+    types: [ created ]
 
 jobs:
   buildx:
