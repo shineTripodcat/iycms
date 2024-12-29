@@ -46,7 +46,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            qyg2297248353/iycms:${{ github.ref_name }}
-            qyg2297248353/iycms:latest
-            ghcr.io/qyg2297248353/iycms:${{ github.ref_name }}
-            ghcr.io/qyg2297248353/iycms:latest
+            shine1223/iycms:${{ github.ref_name }}
+            shine1223/iycms:latest
+            ghcr.io/shineTripodcat/iycms:${{ github.ref_name }}
+            ghcr.io/shineTripodcat/iycms:latest
