@@ -13,11 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Debug GitHub Context
-        run: |
-          echo "Repository: ${{ github.repository }}"
-          echo "Actor: ${{ github.actor }}"
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
