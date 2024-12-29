@@ -5,7 +5,6 @@ on:
       - release
   release:
     types: [ created ]
-  workflow_dispatch: # 添加手动触发器
 
 jobs:
   buildx:
@@ -36,13 +35,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Generate Tags
-        id: generate_tags
-        run: |
-          REF_NAME_LOWER=$(echo '${{ github.ref_name }}' | tr '[:upper:]' '[:lower:]')
-          echo "TAGS=shine1223/iycms:${{ github.ref_name }},shine1223/iycms:latest,ghcr.io/shineTripodcat/iycms:${REF_NAME_LOWER},ghcr.io/shineTripodcat/iycms:latest" >> "$GITHUB_OUTPUT"
+          password: ${{ secrets.GITHUBTOKEN }}
 
       - name: Build and push
         id: docker_build
@@ -52,4 +45,8 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.generate_tags.outputs.TAGS }}
+          tags: |
+            shine1223/iycms:${{ github.ref_name }}
+            shine1223/iycms:latest
+            ghcr.io/shineTripodcat/iycms:${{ github.ref_name }}
+            ghcr.io/shineTripodcat/iycms:latest
