@@ -35,8 +35,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          # username: ${{ github.actor }} # 移除 username
-          # password: ${{ secrets.GITHUBTOKEN }} # 移除 password
+          username: ${{ github.actor }}  # 添加 username 参数，明确指定使用 ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # 添加 password 参数，明确指定使用 ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
         id: docker_build
