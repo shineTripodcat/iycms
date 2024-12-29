@@ -6,7 +6,7 @@ networks:
 
 services:
   iycms:
-    image: qyg2297248353/iycms:v3.3.44
+    image: shine1223/iycms:latest
     container_name: ${CONTAINER_NAME}
     labels:
       createdBy: "Apps"
