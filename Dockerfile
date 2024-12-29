@@ -5,7 +5,13 @@ WORKDIR /app/iycms
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
+    jq \
     && rm -rf /var/lib/apt/lists/*
+
+# 复制 update.sh 脚本到容器的 /app/iycms 目录
+COPY iycms/update.sh /app/iycms/update.sh
+# 设置 update.sh 为可执行
+RUN chmod +x /app/iycms/update.sh
 
 RUN wget --no-check-certificate "https://www.iycms.com/api/v1/download/cms/latest?os=1&kind=x86_64" -O iycms.zip \
     && unzip -o -q iycms.zip -d /opt/iycms \
