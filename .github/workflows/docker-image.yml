@@ -1,8 +1,16 @@
+name: build docker image
+on:
+  push:
+    branches:
+      - release
+  release:
+    types: [ created ]
+
 jobs:
   buildx:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Print GitHub context
@@ -13,7 +21,6 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -24,9 +31,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Packages
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUBTOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v4
         with:
