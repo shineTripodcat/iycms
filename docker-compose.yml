@@ -19,7 +19,7 @@ services:
     environment:
       MYSQL_DATABASE: cms   # 爱影cms远程数据库名称
       MYSQL_USER: iycms   # 爱影cms远程连接时使用的普通用户名
-      MYSQL_PASSWORD: 123456 #普通用户密码
+      MYSQL_PASSWORD: 123456 #普通用户密码 , 我不懂代码  我使用普通用户认证不上，我使用的root连的，应该是下面的认证插件的问题吧。
       MYSQL_ROOT_PASSWORD: 123456  #root用户密码
     command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
     volumes:
