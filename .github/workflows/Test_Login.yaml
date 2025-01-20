@@ -39,7 +39,16 @@ jobs:
           username: github-actions
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Test Docker Login Success
-        run: |
-          echo "Docker Hub login successful"
-          echo "GitHub Packages login successful"
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            shine1223/iycms:${{ github.ref_name }}
+            shine1223/iycms:latest
+            ghcr.io/shineTripodcat/iycms:${{ github.ref_name }}
+            ghcr.io/shineTripodcat/iycms:latest
