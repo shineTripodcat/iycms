@@ -50,5 +50,5 @@ jobs:
           tags: |
             shine1223/iycms:${{ github.ref_name }}
             shine1223/iycms:latest
-            ghcr.io/shineTripodcat/iycms:${{ github.ref_name }}
-            ghcr.io/shineTripodcat/iycms:latest
+            ghcr.io/shinetripodcat/iycms:${{ github.ref_name }}
+            ghcr.io/shinetripodcat/iycms:latest
