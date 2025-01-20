@@ -7,7 +7,7 @@ on:
     types: [ created ]
 
 jobs:
-  buildx:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            shine1223/iycms:${{ github.ref_name }}
-            shine1223/iycms:latest
-            ghcr.io/shineTripodcat/iycms:${{ github.ref_name }}
-            ghcr.io/shineTripodcat/iycms:latest
+            ${{ secrets.DOCKER_USERNAME }}/iycms:${{ github.ref_name }}
+            ${{ secrets.DOCKER_USERNAME }}/iycms:latest
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+            ghcr.io/${{ github.repository }}:latest
