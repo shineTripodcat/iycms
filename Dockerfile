@@ -6,7 +6,10 @@ RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     jq \
+    cron \
     && rm -rf /var/lib/apt/lists/*
+# 设置时区
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone
 
 # 下载并解压 iycms 到 /opt/iycms
 RUN wget --no-check-certificate "https://www.iycms.com/api/v1/download/cms/latest?os=1&kind=x86_64" -O iycms.zip \
@@ -26,6 +29,12 @@ RUN echo '#!/bin/bash\n' \
     'chmod +x /app/iycms/cms\n' \
     'exec /app/iycms/cms\n' > /start.sh \
     && chmod +x /start.sh
+
+# 添加定时任务配置
+RUN echo '0 0 * * * /app/iycms/update.sh' >> /etc/crontab
+
+# 启动 cron 服务
+RUN service cron start
 
 VOLUME ["/app/iycms"]
 
