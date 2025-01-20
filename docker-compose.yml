@@ -1,20 +1,28 @@
-version: "3.8"
-
-networks:
-  1panel-network:
-    external: true
-
 services:
   iycms:
     image: shine1223/iycms:latest
-    container_name: ${CONTAINER_NAME}
+    container_name: iycms
     labels:
       createdBy: "Apps"
     restart: always
-    networks:
-      - 1panel-network
     ports:
-      - ${PANEL_APP_PORT_HTTP}:80
-      - ${PANEL_APP_PORT_ADMIN}:21007
+      - 80:80 ## http端口
+      - 443:443 ## https端口
+      - 21007:21007 ## 后台端口
     volumes:
-      - ${IYCMS_ROOT_PATH}/iycms:/app/iycms
+      - ./iycms:/app/iycms
+
+  mysql-8.0:
+    image: mysql:8.0
+    container_name: mysql-8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: cms   # 爱影cms远程数据库名称
+      MYSQL_USER: iycms   # 爱影cms远程连接时使用的普通用户名
+      MYSQL_PASSWORD: 123456 #普通用户密码
+      MYSQL_ROOT_PASSWORD: 123456  #root用户密码
+    command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
+    volumes:
+      - ./Mysqldata:/var/lib/mysql
+    ports:
+      - 3306:3306
