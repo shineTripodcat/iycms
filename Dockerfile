@@ -15,9 +15,9 @@ RUN wget --no-check-certificate "https://www.iycms.com/api/v1/download/cms/lates
     && chmod +x /opt/iycms/cms
 
 # 复制 update.sh 脚本到 /opt/iycms 目录
-# COPY update.sh /opt/iycms/update.sh
+COPY update.sh /opt/iycms/update.sh
 # 设置 update.sh 为可执行
-# RUN chmod +x /opt/iycms/update.sh
+RUN chmod +x /opt/iycms/update.sh
 
 
 # 将 /opt/iycms 内容复制到 /app/iycms 并启动 iycms
