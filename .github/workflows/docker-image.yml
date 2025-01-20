@@ -1,11 +1,3 @@
-name: Build Docker Image
-on:
-  push:
-    branches:
-      - release
-  release:
-    types: [created]
-
 jobs:
   buildx:
     runs-on: ubuntu-latest
@@ -32,14 +24,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Packages
-        run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile  # 确保使用正确的 Dockerfile 路径
+          file: ./Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
