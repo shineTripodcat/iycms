@@ -47,7 +47,9 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          docker-registry: index.docker.io  # 添加 docker-registry 参数
+          docker-registry: index.docker.io # 添加 docker-registry 参数
+          username: ${{ secrets.DOCKERHUB_USERNAME }} # 添加 docker-registry 用户名
+          password: ${{ secrets.DOCKERHUB_TOKEN }} # 添加 docker-registry 密码
           tags: |
             shine1223/iycms:${{ github.ref_name }}
             shine1223/iycms:latest
