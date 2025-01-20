@@ -49,7 +49,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           docker-registry: index.docker.io  # 添加 docker-registry 参数
           tags: |
-            qyg2297248353/iycms:${{ github.ref_name }}
-            qyg2297248353/iycms:latest
+            shine1223/iycms:${{ github.ref_name }}
+            shine1223/iycms:latest
             ghcr.io/shinetripodcat/iycms:${{ github.ref_name }}
             ghcr.io/shinetripodcat/iycms:latest
