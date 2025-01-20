@@ -4,7 +4,27 @@ on:
     branches:
       - release
   release:
-    types: [ created ]
+    types: [created]
+  workflow_dispatch: # 添加 workflow_dispatch 事件
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'info'
+        type: choice
+        options:
+          - info
+          - debug
+      environment:
+        description: 'Environment to deploy to'
+        default: 'production'
+        type: environment
+        required: true
+      dockerTag:
+        description: "docker tag"
+        required: false
+        default: ${{ github.ref_name }}
+
 
 jobs:
   build:
@@ -18,7 +38,10 @@ jobs:
           echo "repository: ${{ github.repository }}"
           echo "actor: ${{ github.actor }}"
           echo "ref_name: ${{ github.ref_name }}"
-
+          echo "logLevel: ${{ github.event.inputs.logLevel }}"
+          echo "environment: ${{ github.event.inputs.environment }}"
+          echo "dockerTag: ${{ github.event.inputs.dockerTag }}"
+          
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         
@@ -46,7 +69,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            shine1223/iycms:${{ github.ref_name }}
+            shine1223/iycms:${{ github.event.inputs.dockerTag  }}
             shine1223/iycms:latest
-            ghcr.io/shineTripodcat/iycms:${{ github.ref_name }}
+            ghcr.io/shineTripodcat/iycms:${{ github.event.inputs.dockerTag  }}
             ghcr.io/shineTripodcat/iycms:latest
