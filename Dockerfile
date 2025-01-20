@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     jq \
     cron \
+    sed \
+    curl\
+    mysql-client\
     && rm -rf /var/lib/apt/lists/*
 # 设置时区
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone
