@@ -23,7 +23,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          registry: index.docker.io # Specify Docker Hub registry
+          registry: index.docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
@@ -31,9 +31,9 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: github-actions # Use github-actions username
-          password: ${{ secrets.GITHUB_TOKEN }}
-          
+          username: github-actions
+          password: ${{ secrets.GITHUB_TOKEN }} 
+      
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v4
