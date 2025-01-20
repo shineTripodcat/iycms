@@ -1,0 +1,39 @@
+name: Test Docker Login
+
+on:
+  workflow_dispatch: # 手动触发
+  push:
+    branches:
+      - main
+
+jobs:
+  test_login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Print GitHub context
+        run: |
+          echo "repository: ${{ github.repository }}"
+          echo "actor: ${{ github.actor }}"
+          echo "ref_name: ${{ github.ref_name }}"
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: index.docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: github-actions
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test Docker Login Success
+        run: |
+          echo "Docker Hub login successful"
+          echo "GitHub Packages login successful"
