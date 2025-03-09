@@ -1,0 +1,56 @@
+name: build docker image
+on:
+  push:
+    branches:
+      - release
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Print GitHub context
+        run: |
+          echo "repository: ${{ github.repository }}"
+          echo "actor: ${{ github.actor }}"
+          echo "ref_name: ${{ github.ref_name }}"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v4
+        env:
+          ACTIONS_STEP_DEBUG: true  # 启用调试日志
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            shine1223/iycms:${{ github.ref_name }}
+            shine1223/iycms:latest
+            ghcr.io/shinetripodcat/iycms:${{ github.ref_name }}
+            ghcr.io/shinetripodcat/iycms:latest
