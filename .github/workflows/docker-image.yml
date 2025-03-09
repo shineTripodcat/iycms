@@ -1,5 +1,5 @@
-name: build docker image test
-on:
+name: build docker image
+on
   push:
     branches:
       - release
