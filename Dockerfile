@@ -40,11 +40,11 @@ COPY update.sh /opt/iycms/update.sh
 RUN chmod +x /opt/iycms/update.sh
 
 # 复制压缩包到模板目录
-COPY seo004.zip /opt/iycms/data/tpl/
+COPY seo004.zip /app/iycms/data/tpl/
 # 创建目标目录并解压（自动创建目录需加 -d 参数）
-RUN mkdir -p /opt/iycms/data/tpl/seo004 \
-    && unzip -o -q /opt/iycms/data/tpl/seo004.zip -d /opt/iycms/data/tpl/seo004/ \
-    && chmod -R 755 /opt/iycms/data/tpl/seo004
+RUN mkdir -p /app/iycms/data/tpl/seo004 \
+    && unzip -o -q /app/iycms/data/tpl/seo004.zip -d /app/iycms/data/tpl/seo004/ \
+    && chmod -R 755 /app/iycms/data/tpl/seo004
 
 
 
@@ -61,7 +61,8 @@ RUN echo '0 0 * * * /app/iycms/update.sh' >> /etc/crontab
 # 启动 cron 服务
 RUN service cron start
 
-VOLUME ["/app/iycms"]
+# 删除 VOLUME 声明（或明确挂载点）
+# VOLUME ["/app/iycms"]
 
 EXPOSE 80
 EXPOSE 21007
