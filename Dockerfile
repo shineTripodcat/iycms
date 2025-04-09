@@ -39,10 +39,14 @@ RUN chmod +x /opt/iycms/cms
 COPY update.sh /opt/iycms/update.sh
 RUN chmod +x /opt/iycms/update.sh
 
-# 新增：复制并处理 SEO 模板文件
+# 复制压缩包到模板目录
 COPY seo004.zip /opt/iycms/data/tpl/
-RUN unzip -o -q /opt/iycms/data/tpl/seo004.zip -d /opt/iycms/data/tpl/ \
-    && chmod -R 755 /opt/iycms/data/tpl
+# 创建目标目录并解压（自动创建目录需加 -d 参数）
+RUN mkdir -p /opt/iycms/data/tpl/seo004 \
+    && unzip -o -q /opt/iycms/data/tpl/seo004.zip -d /opt/iycms/data/tpl/seo004/ \
+    && chmod -R 755 /opt/iycms/data/tpl/seo004
+
+
 
 # 创建启动脚本
 RUN echo '#!/bin/bash\n' \
