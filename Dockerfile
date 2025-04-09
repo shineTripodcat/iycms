@@ -42,7 +42,6 @@ RUN chmod +x /opt/iycms/update.sh
 # 新增：复制并处理 SEO 模板文件
 COPY seo004.zip /opt/iycms/data/tpl/
 RUN unzip -o -q /opt/iycms/data/tpl/seo004.zip -d /opt/iycms/data/tpl/ \
-    && rm -f /opt/iycms/data/tpl/seo004.zip \
     && chmod -R 755 /opt/iycms/data/tpl
 
 # 创建启动脚本
