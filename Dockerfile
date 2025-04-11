@@ -41,8 +41,8 @@ RUN chmod +x /opt/iycms/update.sh
 
 # 复制seo004到模板目录
 COPY seo004 /opt/iycms/data/tpl/
-
 RUN chmod -R 755 /opt/iycms/data/tpl/seo004
+
 
 
 RUN echo '#!/bin/bash\n' \
