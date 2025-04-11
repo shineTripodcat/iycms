@@ -45,14 +45,21 @@ COPY seo004 /opt/iycms/data/tpl/
 RUN chmod -R 755 /opt/iycms/data/tpl/seo004
 
 
-
-
-# 创建启动脚本
 RUN echo '#!/bin/bash\n' \
-    'cp -r /opt/iycms/* /app/iycms/\n' \
+    'if [ -z "$(ls -A /app/iycms)" ]; then\n' \
+    '   echo "Initializing /app/iycms from container..."\n' \
+    '   cp -r /opt/iycms/* /app/iycms/\n' \
+    'fi\n' \
     'chmod +x /app/iycms/cms\n' \
     'exec /app/iycms/cms\n' > /start.sh \
     && chmod +x /start.sh
+
+# 创建启动脚本
+#RUN echo '#!/bin/bash\n' \
+#    'cp -r /opt/iycms/* /app/iycms/\n' \
+#    'chmod +x /app/iycms/cms\n' \
+#    'exec /app/iycms/cms\n' > /start.sh \
+#    && chmod +x /start.sh
 
 # 添加定时任务配置
 RUN echo '0 0 * * * /app/iycms/update.sh' >> /etc/crontab
