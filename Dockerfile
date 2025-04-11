@@ -55,7 +55,7 @@ RUN echo '#!/bin/bash\n' \
     && chmod +x /start.sh
 
 # 添加定时任务配置
-RUN echo '0 0 * * * /app/iycms/update.sh' >> /etc/crontab
+RUN echo '0 0 * * * root /app/iycms/update.sh' >> /etc/crontab
 
 # 启动 cron 服务
 RUN service cron start
