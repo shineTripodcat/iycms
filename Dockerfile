@@ -40,6 +40,7 @@ COPY update.sh /opt/iycms/update.sh
 RUN chmod +x /opt/iycms/update.sh
 
 # 复制seo004到模板目录
+RUN mkdir -p /opt/iycms/data/tpl/
 COPY seo004 /opt/iycms/data/tpl/
 RUN chmod -R 755 /opt/iycms/data/tpl/seo004
 
